@@ -1,0 +1,45 @@
+
+CREATE TABLE `nacs2023`.`emp1` (empno varchar(20),
+ename varchar(50),
+sex varchar(50),
+desg varchar(20),
+dept varchar(20),
+city varchar(20),
+sal varchar(20));
+
+insert into employee values('E101','Simran','F','HOD','History','Mumbai',150000);
+insert into employee values('E102','Kabir','M','Teacher','History','Mumbai',50000);
+insert into employee values('E103','Priya','F','Teacher','History','Mumbai',50000);
+insert into employee values('E104','Satish','M','HOD','Robotics','Mumbai',250000);
+insert into employee values('E105','Gajanan','M','Teacher','Robotics','Mumbai',50000);
+insert into employee values('E106','Pillai','M','Teacher','Robotics','Mumbai',40000);
+insert into employee values('E107','Harshada','F','HOD','Psychology','Mumbai',140000);
+insert into employee values('E108','Ashish','M','Teacher','Psychology','Mumbai',35000);
+insert into employee values('E109','Shreelakshmi','F','Teacher','Psychology','Mumbai',45000);
+
+select* from employee;
+
+DROP function ex;
+DROP FUNCTION f1;
+
+/* creating a function */
+
+DELIMITER //
+CREATE FUNCTION ex(ck VARCHAR(20))
+RETURNS DECIMAL(10,2)
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+  DECLARE x DECIMAL(10,2);
+  DECLARE y DECIMAL(10,2);
+  DECLARE z DECIMAL(10,2);
+  SELECT SUM(sal) INTO x FROM employee WHERE dept=ck;
+  SELECT SUM(sal) INTO y FROM employee WHERE dept=ck and desg<>'HOD';
+  SET z=x-y;
+  RETURN z;
+END //
+DELIMITER ;
+
+/* calling a function */
+
+SELECT 'The salary of HOD is ' + ex('History');
